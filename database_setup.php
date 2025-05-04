@@ -1,21 +1,28 @@
 <?php
-// database_setup.php - Updated to include todos table
 try {
-    $db = new PDO('mysql:host=localhost;dbname=todo_db;charset=utf8mb4', 'root', 'jfrog123');
+    // Connect to MySQL without specifying a database
+    $db = new PDO('mysql:host=localhost;charset=utf8mb4', 'root', 'jfrog123');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Check if the database exists, and create it if it doesn't
+    $db->exec('CREATE DATABASE IF NOT EXISTS todo_db');
     
+    // Switch to the todo_db database
+    $db->exec('USE todo_db');
+
     // Create todos table
     $db->exec('CREATE TABLE IF NOT EXISTS todos (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INT AUTO_INCREMENT PRIMARY KEY,
         title TEXT NOT NULL,
         description TEXT,
-        completed INTEGER DEFAULT 0
+        completed TINYINT DEFAULT 0
     )');
-    
+
     // Seed todos
-    $db->exec("INSERT OR IGNORE INTO todos (title, description, completed) VALUES ('Finish Project', 'Complete the PHP MVC app', 0)");
-    $db->exec("INSERT OR IGNORE INTO todos (title, description, completed) VALUES ('Buy Groceries', 'Milk, bread, eggs', 1)");
-    
+    $db->exec("INSERT IGNORE INTO todos (id, title, description, completed) VALUES 
+        (1, 'Finish Project', 'Complete the PHP MVC app', 0),
+        (2, 'Buy Groceries', 'Milk, bread, eggs', 1)");
+
     echo "Database setup complete.";
 } catch (PDOException $e) {
     die('Setup failed: ' . $e->getMessage());
