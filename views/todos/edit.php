@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Todo</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
@@ -9,14 +11,27 @@
 <body>
     <div class="container">
         <h1>Edit Todo</h1>
-        <form action="/todos/<?= $todo['id'] ?>/edit" method="POST">
-            <label for="title">Title:</label>
-            <input type="text" name="title" value="<?= htmlspecialchars($todo['title']) ?>" required>
-            <label for="completed">Completed:</label>
-            <input type="checkbox" name="completed" <?= $todo['completed'] ? 'checked' : '' ?>>
-            <button type="submit" class="btn btn-primary">Update</button>
+        <form action="/todos/<?= htmlspecialchars($todo['id']) ?>/edit" method="POST" class="todo-form">
+            <!-- CSRF Token (example; adjust based on your framework) -->
+            <input type="hidden" name="_token" value="<?= htmlspecialchars($csrf_token ?? 'YOUR_CSRF_TOKEN') ?>">
+
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" value="<?= htmlspecialchars($todo['title']) ?>" required
+                    class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="completed">Completed:</label>
+                <input type="checkbox" id="completed" name="completed" value="1"
+                    <?= $todo['completed'] ? 'checked' : '' ?>>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a href="/todos" class="btn btn-secondary">Back to List</a>
+            </div>
         </form>
-        <a href="/todos">Back to List</a>
     </div>
 </body>
 
