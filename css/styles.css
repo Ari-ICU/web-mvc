@@ -174,10 +174,12 @@ input[type="checkbox"] {
     background-color: #d4edda;
 }
 
-.todo-table .todo-item.completed a {
+.todo-table .todo-item.completed a,
+.todo-table .todo-item.completed span {
     text-decoration: line-through;
-    color: #6c757d;
+    color: #5f1642;
 }
+
 
 .todo-table a {
     color: #007bff;

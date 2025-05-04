@@ -4,6 +4,7 @@ define('BASE_PATH', __DIR__);
 
 // Autoloader for classes with and without namespaces
 spl_autoload_register(function ($class) {
+    // Convert class name to file path
     // Handle namespaced classes (e.g., Lib\Request)
     $file = BASE_PATH . '/' . str_replace('\\', '/', $class) . '.php';
     if (file_exists($file)) {
@@ -30,7 +31,7 @@ require_once BASE_PATH . '/Router.php';
 
 // Routes configuration
 $router = new Router();
-// Todo routes
+//todos routes
 $router->add('GET', '/todos', 'TodoController', 'index');
 $router->add('GET', '/todos/(\d+)', 'TodoController', 'show');
 $router->add('GET', '/todos/create', 'TodoController', 'create');

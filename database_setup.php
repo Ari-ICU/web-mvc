@@ -1,30 +1,34 @@
 <?php
 try {
-    // Connect to MySQL without specifying a database
     $db = new PDO('mysql:host=localhost;charset=utf8mb4', 'root', 'jfrog123');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Check if the database exists, and create it if it doesn't
-    $db->exec('CREATE DATABASE IF NOT EXISTS todo_db');
-    
-    // Switch to the todo_db database
-    $db->exec('USE todo_db');
+    // Create database if it doesn't exist
+    $db->exec('CREATE DATABASE IF NOT EXISTS todo_db CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci');
 
-    // Create todos table
+    // Reconnect to the new DB
+    $db = new PDO('mysql:host=localhost;dbname=todo_db;charset=utf8mb4', 'root', 'jfrog123');
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Create table with all columns at once
     $db->exec('CREATE TABLE IF NOT EXISTS todos (
         id INT AUTO_INCREMENT PRIMARY KEY,
         title TEXT NOT NULL,
         description TEXT,
-        completed TINYINT DEFAULT 0
+        completed TINYINT DEFAULT 0,
+       
     )');
 
-    // Seed todos
-    $db->exec("INSERT IGNORE INTO todos (id, title, description, completed) VALUES 
-        (1, 'Finish Project', 'Complete the PHP MVC app', 0),
-        (2, 'Buy Groceries', 'Milk, bread, eggs', 1)");
+    $db->exec("ALTER TABLE todos 
+        ADD COLUMN post_date DATE NULL,
+        ADD COLUMN deadline DATE NULL,
+        ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    ");
+
 
     echo "Database setup complete.";
 } catch (PDOException $e) {
-    die('Setup failed: ' . $e->getMessage());
+    echo "Database setup failed: " . $e->getMessage();
 }
 ?>

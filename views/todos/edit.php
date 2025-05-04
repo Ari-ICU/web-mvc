@@ -20,7 +20,21 @@
                 <input type="text" id="title" name="title" value="<?= htmlspecialchars($todo['title']) ?>" required
                     class="form-control">
             </div>
-
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description"
+                    class="form-control"><?= htmlspecialchars($todo['description']) ?></textarea>
+            </div>
+            <div class="form-group">
+                <label for="post_date">Post Date:</label>
+                <input type="date" id="post_date" name="post_date"
+                    value="<?= htmlspecialchars($todo['post_date'] ?? '') ?>" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="deadline">Deadline Date:</label>
+                <input type="date" id="deadline" name="deadline"
+                    value="<?= htmlspecialchars($todo['deadline'] ?? '') ?>" class="form-control">
+            </div>
             <div class="form-group">
                 <label for="completed">Completed:</label>
                 <input type="checkbox" id="completed" name="completed" value="1"

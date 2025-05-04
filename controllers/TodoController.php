@@ -28,16 +28,23 @@ class TodoController extends Controller {
                 $data = $this->request->validate(['title']);
                 $data['description'] = $this->request->input('description', '');
                 $data['completed'] = $this->request->input('completed', 0);
-                $id = $this->todoModel->addTodo($data);
+                $data['post_date'] = $this->request->input('post_date', null);
+                $data['deadline'] = $this->request->input('deadline', null);
+    
+                $success = $this->todoModel->addTodo($data);
                 header('Location: /todos');
                 exit;
             } catch (\Exception $e) {
                 http_response_code(400);
-                return json_encode(['error' => $e->getMessage()]);
+                header('Content-Type: application/json');
+                echo json_encode(['error' => $e->getMessage()]);
+                exit;
             }
         }
+    
         $this->view('todos/create');
     }
+    
 
     public function update($id) {
         if ($this->request->isMethod('POST')) {
@@ -45,6 +52,8 @@ class TodoController extends Controller {
                 $data = $this->request->validate(['title']);
                 $data['description'] = $this->request->input('description', '');
                 $data['completed'] = $this->request->input('completed', 0);
+                $data['post_date'] = $this->request->input('post_date', null);
+                $data['deadline'] = $this->request->input('deadline', null);
                 $success = $this->todoModel->updateTodo($id, $data);
                 header('Location: /todos');
                 exit;

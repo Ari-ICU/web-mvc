@@ -17,8 +17,16 @@
         <div class="todo-details">
             <p><strong>ID:</strong> <?= htmlspecialchars($todo['id']) ?></p>
             <p><strong>Description:</strong> <?= htmlspecialchars($todo['description'] ?: 'No description') ?></p>
-            <p><strong>Status:</strong> <span
-                    class="<?= $todo['completed'] ? 'status-completed' : 'status-pending' ?>"><?= $todo['completed'] ? 'Completed' : 'Pending' ?></span>
+            <p><strong>Post Date:</strong>
+                <?= htmlspecialchars($todo['post_date'] ?? 'Not set') ?>
+            </p>
+            <p><strong>Deadline Date:</strong>
+                <?= htmlspecialchars($todo['deadline'] ?? 'Not set') ?>
+            </p>
+            <p><strong>Status:</strong>
+                <span class="<?= $todo['completed'] ? 'status-completed' : 'status-pending' ?>">
+                    <?= $todo['completed'] ? 'Completed' : 'Pending' ?>
+                </span>
             </p>
             <div class="form-actions">
                 <a href="/todos" class="btn btn-secondary">Back to Todos</a>

@@ -26,6 +26,14 @@
                 <textarea id="description" name="description" class="form-control"></textarea>
             </div>
             <div class="form-group">
+                <label for="post_date">Post Date:</label>
+                <input type="date" id="post_date" name="post_date" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="deadline">Deadline Date:</label>
+                <input type="date" id="deadline" name="deadline" class="form-control">
+            </div>
+            <div class="form-group">
                 <label for="completed">Completed:</label>
                 <input type="checkbox" id="completed" name="completed" value="1">
             </div>
