@@ -125,46 +125,74 @@ input[type="checkbox"] {
     margin-top: 10px;
 }
 
-/* Todo List Styles */
-.todo-list {
-    list-style: none;
+/* Todo Table Styles */
+.todo-table {
+    width: 100%;
+    border-collapse: collapse;
     margin-top: 20px;
+    background-color: #f8f9fa;
 }
 
-.todo-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.todo-table th,
+.todo-table td {
     padding: 12px;
-    margin-bottom: 10px;
-    background-color: #f8f9fa;
-    border: 1px solid #e9ecef;
-    border-radius: 4px;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.todo-table th {
+    background-color: #e9ecef;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.status-completed {
+    color: #2e7d32; /* green */
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.status-pending {
+    color: #c62828; /* red */
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.todo-table .todo-item {
     transition: background-color 0.2s ease;
 }
 
-.todo-item:hover {
+.todo-table .todo-item:hover {
     background-color: #e9ecef;
 }
 
-.todo-item.completed {
+.todo-table .todo-item.completed {
     background-color: #d4edda;
-    border-color: #c3e6cb;
 }
 
-.todo-item.completed a {
+.todo-table .todo-item.completed a {
     text-decoration: line-through;
     color: #6c757d;
 }
 
-.todo-item a {
+.todo-table a {
     color: #007bff;
     text-decoration: none;
     font-weight: 500;
 }
 
-.todo-item a:hover {
+.todo-table a:hover {
     text-decoration: underline;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
 /* No Data and Data Available Messages */
@@ -227,6 +255,8 @@ a:hover {
     text-decoration: underline;
 }
 
+
+
 /* Responsive Design */
 @media (max-width: 600px) {
     .container {
@@ -242,10 +272,40 @@ a:hover {
         max-width: 100%;
     }
 
-    .todo-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
+    .todo-table {
+        display: block;
+    }
+
+    .todo-table thead {
+        display: none;
+    }
+
+    .todo-table tbody,
+    .todo-table tr,
+    .todo-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .todo-table tr {
+        margin-bottom: 15px;
+        border: 1px solid #e9ecef;
+        border-radius: 4px;
+        background-color: #f8f9fa;
+    }
+
+    .todo-table td {
+        padding: 10px;
+        border-bottom: none;
+        text-align: left;
+    }
+
+    .todo-table td:first-child {
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .todo-table .action-buttons {
+        justify-content: flex-start;
     }
 
     .form-control {
