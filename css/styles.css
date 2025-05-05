@@ -161,7 +161,14 @@ input[type="checkbox"] {
     border-radius: 5px;
     text-align: center;
 }
-
+.todo-table-header{
+   
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #e9ecef;
+}
 .todo-table .todo-item {
     transition: background-color 0.2s ease;
 }

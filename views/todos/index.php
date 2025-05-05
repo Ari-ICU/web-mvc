@@ -11,9 +11,27 @@
 <body>
     <div class="container">
         <h1>Todos</h1>
-        <a href="/todos/create" class="btn btn-primary">Add New Todo</a>
+        <div class="filter-section">
+            <a href="/todos/create" class="btn btn-primary">Add New Todo</a>
 
-        <p class="data-available">Todo List</p>
+        </div>
+
+        <?php if (empty($todos)): ?>
+        <p class="no-data">No Data Available</p>
+        <?php else: ?>
+        <div class="todo-table-header">
+            <p class="data-available">Todo List</p>
+            <form action="/todos" method="GET" class="filter-form" style="display:inline;">
+                <label for="sort">Sort by Title:</label>
+                <select id="sort" name="sort" onchange="this.form.submit()">
+                    <option value="" <?= !isset($_GET['sort']) ? 'selected' : '' ?>>Default</option>
+                    <option value="asc" <?= isset($_GET['sort']) && $_GET['sort'] === 'asc' ? 'selected' : '' ?>>A-Z
+                    </option>
+                    <option value="desc" <?= isset($_GET['sort']) && $_GET['sort'] === 'desc' ? 'selected' : '' ?>>Z-A
+                    </option>
+                </select>
+            </form>
+        </div>
         <table class="todo-table">
             <thead>
                 <tr>
@@ -24,9 +42,6 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <?php if (empty($todos)): ?>
-            <p class="no-data">No Data Available</p>
-            <?php else: ?>
             <tbody>
                 <?php foreach ($todos as $todo): ?>
                 <tr class="todo-item <?= $todo['completed'] ? 'completed' : '' ?>">
@@ -36,10 +51,10 @@
                         </a>
                     </td>
                     <td>
-                        <span><?= htmlspecialchars($todo['post_date'] ?? '') ?></span>
+                        <span><?= htmlspecialchars(array_key_exists('post_date', $todo) && $todo['post_date'] ? $todo['post_date'] : '') ?></span>
                     </td>
                     <td>
-                        <span><?= htmlspecialchars($todo['deadline'] ?? '') ?></span>
+                        <span><?= htmlspecialchars(array_key_exists('deadline', $todo) && $todo['deadline'] ? $todo['deadline'] : '') ?></span>
                     </td>
                     <td class="<?= $todo['completed'] ? 'status-completed' : 'status-pending' ?>">
                         <span><?= $todo['completed'] ? 'Completed' : 'Pending' ?></span>

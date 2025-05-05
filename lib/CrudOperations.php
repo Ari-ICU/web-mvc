@@ -21,10 +21,10 @@ class CrudOperations {
     /**
      * Get all records or a single record by ID
      * @param int|null $id Optional record ID
-     * @param array $conditions Optional additional conditions
+     * @param array $options Optional conditions and sorting
      * @return array|null
      */
-    public function get(?int $id = null, array $conditions = []): ?array {
+    public function get(?int $id = null, array $options = []): ?array {
         try {
             $query = "SELECT * FROM {$this->table}";
             $params = [];
@@ -32,8 +32,12 @@ class CrudOperations {
             if ($id !== null) {
                 $query .= " WHERE id = ?";
                 $params[] = $id;
-            } elseif (!empty($conditions)) {
-                $query .= " WHERE " . $this->buildConditions($conditions, $params);
+            } elseif (!empty($options['conditions'])) {
+                $query .= " WHERE " . $this->buildConditions($options['conditions'], $params);
+            }
+
+            if (!empty($options['order_by'])) {
+                $query .= " ORDER BY " . $options['order_by'];
             }
 
             $stmt = $this->db->prepare($query);

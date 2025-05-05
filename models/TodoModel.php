@@ -7,8 +7,14 @@ class TodoModel extends Model {
         $this->crud = new \Lib\CrudOperations($this->db, 'todos');
     }
 
-    public function getTodos() {
-        return $this->crud->get();
+    public function getTodos($sort = '') {
+        $options = [];
+        if ($sort === 'asc') {
+            $options['order_by'] = 'title ASC';
+        } elseif ($sort === 'desc') {
+            $options['order_by'] = 'title DESC';
+        }
+        return $this->crud->get(null, $options); // Pass options to CrudOperations
     }
 
     public function getTodo($id) {

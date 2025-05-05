@@ -8,7 +8,8 @@ class TodoController extends Controller {
     }
 
     public function index() {
-        $todos = $this->todoModel->getTodos();
+        $sort = $this->request->input('sort', ''); // Get sort parameter (asc, desc, or empty)
+        $todos = $this->todoModel->getTodos($sort); // Pass sort to model
         $this->view('todos/index', ['todos' => $todos]);
     }
 
@@ -44,7 +45,6 @@ class TodoController extends Controller {
     
         $this->view('todos/create');
     }
-    
 
     public function update($id) {
         if ($this->request->isMethod('POST')) {
