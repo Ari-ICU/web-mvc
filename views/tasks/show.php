@@ -1,6 +1,6 @@
-**views/todos/show.php**
+**views/tasks/show.php**
 ```php
-<?php $activePage = 'todos'; ?>
+<?php $activePage = 'tasks'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="form-actions">
-                    <a href="/todos" class="btn btn-secondary">Back to Todos</a>
+                    <a href="/tasks" class="btn btn-secondary">Back to tasks</a>
                 </div>
             </div>
         </div>

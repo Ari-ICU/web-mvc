@@ -1,4 +1,4 @@
-<?php $activePage = 'todos'; ?>
+<?php $activePage = 'tasks'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +19,7 @@
         <!-- Main Content -->
         <div class="content flex-grow-1 p-4">
             <h1 class="mb-4">Edit Todo</h1>
-            <form action="/todos/<?= htmlspecialchars($todo['id']) ?>/edit" method="POST" class="todo-form"
+            <form action="/tasks/<?= htmlspecialchars($todo['id']) ?>/edit" method="POST" class="todo-form"
                 id="task-form">
                 <!-- CSRF Token -->
                 <input type="hidden" name="_token"
@@ -62,7 +62,7 @@
 
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Update</button>
-                    <a href="/todos" class="btn btn-secondary">Back to List</a>
+                    <a href="/tasks" class="btn btn-secondary">Back to List</a>
                 </div>
             </form>
         </div>

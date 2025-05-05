@@ -1,11 +1,11 @@
-<?php $activePage = 'todos'; ?>
+<?php $activePage = 'tasks'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todos</title>
+    <title>tasks</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
@@ -20,15 +20,15 @@
         <div class="content flex-grow-1 p-4">
             <h1 class="mb-4">Task</h1>
             <div class="filter-section mb-3">
-                <a href="/todos/create" class="btn btn-primary">Add New Task</a>
+                <a href="/tasks/create" class="btn btn-primary">Add New Task</a>
             </div>
 
-            <?php if (empty($todos)): ?>
+            <?php if (empty($tasks)): ?>
             <p class="no-data text-center">No Data Available</p>
             <?php else: ?>
             <div class="todo-table-header d-flex justify-content-between align-items-center mb-3">
                 <p class="data-available mb-0">Todo List</p>
-                <form action="/todos" method="GET" class="filter-form" style="display:inline;">
+                <form action="/tasks" method="GET" class="filter-form" style="display:inline;">
                     <label for="sort" class="me-2">Sort by Title:</label>
                     <select id="sort" name="sort" class="form-select d-inline-block w-auto"
                         onchange="this.form.submit()">
@@ -53,10 +53,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($todos as $todo): ?>
+                        <?php foreach ($tasks as $todo): ?>
                         <tr class="todo-item <?= $todo['completed'] ? 'completed' : '' ?>">
                             <td>
-                                <a href="/todos/<?= htmlspecialchars($todo['id']) ?>" class="text-decoration-none">
+                                <a href="/tasks/<?= htmlspecialchars($todo['id']) ?>" class="text-decoration-none">
                                     <?= htmlspecialchars($todo['title']) ?>
                                 </a>
                             </td>
@@ -107,9 +107,9 @@
                             </td>
                             <td>
                                 <div class="action-buttons d-flex gap-2">
-                                    <a href="/todos/<?= htmlspecialchars($todo['id']) ?>/edit"
+                                    <a href="/tasks/<?= htmlspecialchars($todo['id']) ?>/edit"
                                         class="btn btn-sm btn-secondary">Edit</a>
-                                    <form action="/todos/<?= htmlspecialchars($todo['id']) ?>/delete" method="POST"
+                                    <form action="/tasks/<?= htmlspecialchars($todo['id']) ?>/delete" method="POST"
                                         style="display:inline;"
                                         onsubmit="return confirm('Are you sure you want to delete this todo?')">
                                         <button type="submit" class="btn btn-sm btn-danger">Delete</button>

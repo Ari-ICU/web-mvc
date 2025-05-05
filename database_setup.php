@@ -42,7 +42,9 @@ try {
             name VARCHAR(50) NOT NULL UNIQUE
         )
     ');
+    $db->exec('ALTER TABLE tags ADD description TEXT DEFAULT NULL');
 
+    
     // Create tasks table
     $db->exec('
         CREATE TABLE IF NOT EXISTS tasks (

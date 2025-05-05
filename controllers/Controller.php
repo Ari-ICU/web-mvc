@@ -1,23 +1,28 @@
 <?php
+
+use Lib\Request;
 class Controller {
+    public function loadModel($model) {
+        require_once "../app/models/$model.php";
+        return new $model();
+    }
     protected $request;
 
     public function __construct() {
-        $this->request = new \Lib\Request();
+        $this->request = new Request(); // assuming you have a Request class
     }
-
-    protected function view($view, $data = []) {
-        // Check if the view file exists
-        $viewPath = BASE_PATH . "/views/$view.php";
-
-        if (file_exists($viewPath)) {
-            extract($data);
-            require $viewPath;
+    public function view($view, $data = []) {
+        extract($data);
+        $file = __DIR__ . '/../views/' . $view . '.php'; // Go up one directory to mvc/views/
+    
+        if (file_exists($file)) {
+            require_once $file;
         } else {
-
-            http_response_code(404); 
-            $this->view('errors/404');
+            http_response_code(500);
+            echo "View file not found: $file";
+            exit;
         }
     }
+    
 }
 ?>

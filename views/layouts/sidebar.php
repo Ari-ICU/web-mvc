@@ -5,7 +5,7 @@
     <h4 class="mb-4">Task Management</h4>
     <ul class="nav flex-column">
         <li class="nav-item">
-            <a class="nav-link text-white <?php echo $activePage == 'todos' ? 'active' : ''; ?>" href="/todos">Tasks</a>
+            <a class="nav-link text-white <?php echo $activePage == 'tasks' ? 'active' : ''; ?>" href="/tasks">Tasks</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-white" href="/users">Users</a>

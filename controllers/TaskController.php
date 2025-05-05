@@ -1,22 +1,25 @@
 <?php
-class TodoController extends Controller {
-    private $todoModel;
+class TaskController extends Controller {
+    private $taskModel;
+    private $tagModel;
 
     public function __construct() {
         parent::__construct();
-        $this->todoModel = new TodoModel();
+        $this->taskModel = new TodoModel(); // TodoModel uses 'tasks' table
+        $this->tagModel = new TagModel();
     }
 
     public function index() {
         $sort = $this->request->input('sort', '');
-        $todos = $this->todoModel->getTodos($sort);
-        $this->view('todos/index', ['todos' => $todos]);
+        $tasks = $this->taskModel->getTasks($sort);
+        $this->view('tasks/index', ['tasks' => $tasks, 'activePage' => 'tasks']);
     }
 
     public function show($id) {
-        $todo = $this->todoModel->getTodo($id);
-        if ($todo) {
-            $this->view('todos/show', ['todo' => $todo]);
+        $task = $this->taskModel->getTask($id);
+        if ($task) {
+            $tags = $this->taskModel->getTagsByTask($id);
+            $this->view('tasks/show', ['task' => $task, 'tags' => $tags]);
         } else {
             http_response_code(404);
             $this->view('errors/404');
@@ -31,10 +34,14 @@ class TodoController extends Controller {
                 $data['due_date'] = $this->request->input('due_date', null);
                 $data['priority'] = $this->validatePriority($this->request->input('priority', 'medium'));
                 $data['status'] = $this->validateStatus($this->request->input('status', 'pending'));
-                $data['user_id'] = $this->request->input('user_id'); // Make sure to pass the user_id
+                $data['user_id'] = $this->request->input('user_id'); // Ensure user_id is passed
+                $tagIds = $this->request->input('tags', []);
 
-                $this->todoModel->addTodo($data);
-                header('Location: /todos');
+                $taskId = $this->taskModel->addTask($data);
+                foreach ($tagIds as $tagId) {
+                    $this->taskModel->assignTag($taskId, $tagId);
+                }
+                header('Location: /tasks');
                 exit;
             } catch (\Exception $e) {
                 http_response_code(400);
@@ -43,7 +50,8 @@ class TodoController extends Controller {
             }
         }
 
-        $this->view('todos/create');
+        $tags = $this->tagModel->getTags();
+        $this->view('tasks/create', ['tags' => $tags]);
     }
 
     public function update($id) {
@@ -54,9 +62,15 @@ class TodoController extends Controller {
                 $data['due_date'] = $this->request->input('due_date', null);
                 $data['priority'] = $this->validatePriority($this->request->input('priority', 'medium'));
                 $data['status'] = $this->validateStatus($this->request->input('status', 'pending'));
+                $tagIds = $this->request->input('tags', []);
 
-                $this->todoModel->updateTodo($id, $data);
-                header('Location: /todos');
+                $this->taskModel->updateTask($id, $data);
+                // Clear existing tags and assign new ones
+                $this->db->prepare('DELETE FROM task_tag WHERE task_id = :task_id')->execute([':task_id' => $id]);
+                foreach ($tagIds as $tagId) {
+                    $this->taskModel->assignTag($id, $tagId);
+                }
+                header('Location: /tasks');
                 exit;
             } catch (\Exception $e) {
                 http_response_code(400);
@@ -65,9 +79,11 @@ class TodoController extends Controller {
             }
         }
 
-        $todo = $this->todoModel->getTodo($id);
-        if ($todo) {
-            $this->view('todos/edit', ['todo' => $todo]);
+        $task = $this->taskModel->getTask($id);
+        if ($task) {
+            $tags = $this->tagModel->getTags();
+            $selectedTags = $this->taskModel->getTagsByTask($id);
+            $this->view('tasks/edit', ['task' => $task, 'tags' => $tags, 'selectedTags' => $selectedTags]);
         } else {
             http_response_code(404);
             $this->view('errors/404');
@@ -76,8 +92,8 @@ class TodoController extends Controller {
 
     public function delete($id) {
         try {
-            $this->todoModel->deleteTodo($id);
-            header('Location: /todos');
+            $this->taskModel->deleteTask($id);
+            header('Location: /tasks');
             exit;
         } catch (\Exception $e) {
             http_response_code(400);
