@@ -23,6 +23,7 @@
                 <!-- CSRF Token -->
                 <input type="hidden" name="_token"
                     value="<?php echo htmlspecialchars($csrf_token ?? 'YOUR_CSRF_TOKEN'); ?>">
+
                 <div class="row">
                     <!-- Left Column -->
                     <div class="col-md-6 mb-3">
@@ -46,11 +47,12 @@
                             </select>
                         </div>
                     </div>
+
                     <!-- Right Column -->
                     <div class="col-md-6 mb-3">
                         <div class="mb-3">
                             <label for="tags" class="form-label">Tags:</label>
-                            <select name="tags[]" id="tags" class="form-control" multiple>
+                            <select name="tags[]" id="tags" class="form-control" multiple required>
                                 <?php foreach ($tags as $tag): ?>
                                 <option value="<?php echo htmlspecialchars($tag['id']); ?>">
                                     <?php echo htmlspecialchars($tag['name']); ?>
@@ -59,19 +61,29 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="post_date" class="form-label">Post Date:</label>
-                            <input type="date" id="post_date" name="post_date" class="form-control">
+                            <label for="priority" class="form-label">Priority:</label>
+                            <select name="priority" id="priority" class="form-control">
+                                <option value="low">Low</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="high">High</option>
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label for="deadline" class="form-label">Deadline Date:</label>
-                            <input type="date" id="deadline" name="deadline" class="form-control">
+                            <label for="status" class="form-label">Status:</label>
+                            <select name="status" id="status" class="form-control">
+                                <option value="pending" selected>Pending</option>
+                                <option value="completed">Completed</option>
+                                <option value="canceled">Canceled</option>
+                            </select>
                         </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" id="completed" name="completed" value="1" class="form-check-input">
-                            <label for="completed" class="form-check-label">Completed:</label>
+                        <div class="mb-3">
+                            <label for="post_date" class="form-label">Due Date:</label>
+                            <input type="date" id="post_date" name="post_date" class="form-control">
                         </div>
+
                     </div>
                 </div>
+
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Create</button>
                     <a href="/todos" class="btn btn-secondary">Back to Todos</a>
@@ -83,6 +95,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+    // Initialize Select2 for the tags and user_id fields
+    $(document).ready(function() {
+        $('#tags').select2();
+        $('#user_id').select2();
+    });
+    </script>
     <script src="/js/app.js"></script>
 </body>
 

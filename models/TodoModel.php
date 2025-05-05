@@ -4,7 +4,7 @@ class TodoModel extends Model {
 
     public function __construct() {
         parent::__construct();
-        $this->crud = new \Lib\CrudOperations($this->db, 'todos');
+        $this->crud = new \Lib\CrudOperations($this->db, 'tasks');
     }
 
     public function getTodos($sort = '') {
@@ -14,7 +14,7 @@ class TodoModel extends Model {
         } elseif ($sort === 'desc') {
             $options['order_by'] = 'title DESC';
         }
-        return $this->crud->get(null, $options); // Pass options to CrudOperations
+        return $this->crud->get(null, $options);
     }
 
     public function getTodo($id) {
@@ -33,4 +33,3 @@ class TodoModel extends Model {
         return $this->crud->delete($id);
     }
 }
-?>

@@ -8,8 +8,8 @@ class TodoController extends Controller {
     }
 
     public function index() {
-        $sort = $this->request->input('sort', ''); // Get sort parameter (asc, desc, or empty)
-        $todos = $this->todoModel->getTodos($sort); // Pass sort to model
+        $sort = $this->request->input('sort', '');
+        $todos = $this->todoModel->getTodos($sort);
         $this->view('todos/index', ['todos' => $todos]);
     }
 
@@ -28,21 +28,21 @@ class TodoController extends Controller {
             try {
                 $data = $this->request->validate(['title']);
                 $data['description'] = $this->request->input('description', '');
-                $data['completed'] = $this->request->input('completed', 0);
-                $data['post_date'] = $this->request->input('post_date', null);
-                $data['deadline'] = $this->request->input('deadline', null);
-    
-                $success = $this->todoModel->addTodo($data);
+                $data['due_date'] = $this->request->input('due_date', null);
+                $data['priority'] = $this->validatePriority($this->request->input('priority', 'medium'));
+                $data['status'] = $this->validateStatus($this->request->input('status', 'pending'));
+                $data['user_id'] = $this->request->input('user_id'); // Make sure to pass the user_id
+
+                $this->todoModel->addTodo($data);
                 header('Location: /todos');
                 exit;
             } catch (\Exception $e) {
                 http_response_code(400);
-                header('Content-Type: application/json');
                 echo json_encode(['error' => $e->getMessage()]);
                 exit;
             }
         }
-    
+
         $this->view('todos/create');
     }
 
@@ -51,17 +51,20 @@ class TodoController extends Controller {
             try {
                 $data = $this->request->validate(['title']);
                 $data['description'] = $this->request->input('description', '');
-                $data['completed'] = $this->request->input('completed', 0);
-                $data['post_date'] = $this->request->input('post_date', null);
-                $data['deadline'] = $this->request->input('deadline', null);
-                $success = $this->todoModel->updateTodo($id, $data);
+                $data['due_date'] = $this->request->input('due_date', null);
+                $data['priority'] = $this->validatePriority($this->request->input('priority', 'medium'));
+                $data['status'] = $this->validateStatus($this->request->input('status', 'pending'));
+
+                $this->todoModel->updateTodo($id, $data);
                 header('Location: /todos');
                 exit;
             } catch (\Exception $e) {
                 http_response_code(400);
-                return json_encode(['error' => $e->getMessage()]);
+                echo json_encode(['error' => $e->getMessage()]);
+                exit;
             }
         }
+
         $todo = $this->todoModel->getTodo($id);
         if ($todo) {
             $this->view('todos/edit', ['todo' => $todo]);
@@ -73,13 +76,28 @@ class TodoController extends Controller {
 
     public function delete($id) {
         try {
-            $success = $this->todoModel->deleteTodo($id);
+            $this->todoModel->deleteTodo($id);
             header('Location: /todos');
             exit;
         } catch (\Exception $e) {
             http_response_code(400);
-            return json_encode(['error' => $e->getMessage()]);
+            echo json_encode(['error' => $e->getMessage()]);
         }
     }
+
+    private function validatePriority($value) {
+        $valid = ['low', 'medium', 'high'];
+        if (!in_array($value, $valid)) {
+            throw new Exception("Invalid priority value.");
+        }
+        return $value;
+    }
+
+    private function validateStatus($value) {
+        $valid = ['pending', 'completed', 'canceled'];
+        if (!in_array($value, $valid)) {
+            throw new Exception("Invalid status value.");
+        }
+        return $value;
+    }
 }
-?>

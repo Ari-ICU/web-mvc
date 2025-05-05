@@ -24,6 +24,7 @@
                 <!-- CSRF Token -->
                 <input type="hidden" name="_token"
                     value="<?php echo htmlspecialchars($csrf_token ?? 'YOUR_CSRF_TOKEN'); ?>">
+
                 <div class="row">
                     <!-- Left Column -->
                     <div class="col-md-6 mb-3">
@@ -38,6 +39,7 @@
                                 rows="4"><?= htmlspecialchars($todo['description']) ?></textarea>
                         </div>
                     </div>
+
                     <!-- Right Column -->
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
@@ -57,6 +59,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Update</button>
                     <a href="/todos" class="btn btn-secondary">Back to List</a>
@@ -68,6 +71,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        // Initialize Select2 for tags or other select fields if necessary
+        // $('#tags').select2();
+    });
+    </script>
     <script src="/js/app.js"></script>
 </body>
 

@@ -45,9 +45,10 @@
                     <thead>
                         <tr>
                             <th>Title</th>
-                            <th>Post Date</th>
-                            <th>Deadline Date</th>
                             <th>Status</th>
+                            <th>User</th> <!-- New Column for User -->
+                            <th>Tags</th> <!-- New Column for Tags -->
+                            <th>Deadline Date</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -59,14 +60,50 @@
                                     <?= htmlspecialchars($todo['title']) ?>
                                 </a>
                             </td>
+
                             <td>
-                                <span><?= htmlspecialchars(array_key_exists('post_date', $todo) && $todo['post_date'] ? $todo['post_date'] : '') ?></span>
+                                <span>
+                                    <?php
+                                            // Display the status based on the ENUM value
+                                            switch ($todo['status']) {
+                                                case 'completed':
+                                                    echo '<span class="badge bg-success">Completed</span>';
+                                                    break;
+                                                case 'canceled':
+                                                    echo '<span class="badge bg-danger">Canceled</span>';
+                                                    break;
+                                                case 'pending':
+                                                default:
+                                                    echo '<span class="badge bg-warning">Pending</span>';
+                                                    break;
+                                            }
+                                            ?>
+                                </span>
                             </td>
                             <td>
-                                <span><?= htmlspecialchars(array_key_exists('deadline', $todo) && $todo['deadline'] ? $todo['deadline'] : '') ?></span>
+                                <span>
+                                    <?php
+                                            // Display the user name for the assigned user
+                                            if (!empty($todo['user_id'])) {
+                                                echo htmlspecialchars($todo['user_name']);
+                                            }
+                                            ?>
+                                </span>
                             </td>
-                            <td class="<?= $todo['completed'] ? 'status-completed' : 'status-pending' ?>">
-                                <span><?= $todo['completed'] ? 'Completed' : 'Pending' ?></span>
+                            <td>
+                                <span>
+                                    <?php
+                                            // Display tags associated with the todo
+                                            if (!empty($todo['tags'])) {
+                                                echo implode(', ', array_map(function ($tag) {
+                                                    return htmlspecialchars($tag['name']);
+                                                }, $todo['tags']));
+                                            }
+                                            ?>
+                                </span>
+                            </td>
+                            <td>
+                                <span><?= htmlspecialchars(array_key_exists('due_date', $todo) && $todo['due_date'] ? $todo['due_date'] : '') ?></span>
                             </td>
                             <td>
                                 <div class="action-buttons d-flex gap-2">

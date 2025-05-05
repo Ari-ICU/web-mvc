@@ -24,30 +24,28 @@ class CrudOperations {
      * @param array $options Optional conditions and sorting
      * @return array|null
      */
-    public function get(?int $id = null, array $options = []): ?array {
+    public function get($id = null, array $options = []): ?array {
         try {
-            $query = "SELECT * FROM {$this->table}";
-            $params = [];
-            
             if ($id !== null) {
-                $query .= " WHERE id = ?";
-                $params[] = $id;
-            } elseif (!empty($options['conditions'])) {
-                $query .= " WHERE " . $this->buildConditions($options['conditions'], $params);
+                $stmt = $this->db->prepare("SELECT * FROM {$this->table} WHERE id = :id");
+                $stmt->execute(['id' => $id]);
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                return $result ?: null; // ✅ return null if false
             }
-
+    
+            $sql = "SELECT * FROM {$this->table}";
             if (!empty($options['order_by'])) {
-                $query .= " ORDER BY " . $options['order_by'];
+                $sql .= " ORDER BY " . $options['order_by'];
             }
-
-            $stmt = $this->db->prepare($query);
-            $stmt->execute($params);
-            
-            return $id !== null ? $stmt->fetch(PDO::FETCH_ASSOC) : $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            $stmt = $this->db->query($sql);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            throw new \Exception("Error fetching records: " . $e->getMessage());
+            // Optional: log error here
+            return null; // ✅ also return null on error
         }
     }
+    
 
     /**
      * Add a new record
