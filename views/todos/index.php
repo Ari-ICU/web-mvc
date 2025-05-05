@@ -39,7 +39,7 @@
                         <span><?= htmlspecialchars($todo['post_date'] ?? '') ?></span>
                     </td>
                     <td>
-                        <span><?= htmlspecialchars($todo['post_date'] ?? '') ?></span>
+                        <span><?= htmlspecialchars($todo['deadline'] ?? '') ?></span>
                     </td>
                     <td class="<?= $todo['completed'] ? 'status-completed' : 'status-pending' ?>">
                         <span><?= $todo['completed'] ? 'Completed' : 'Pending' ?></span>
