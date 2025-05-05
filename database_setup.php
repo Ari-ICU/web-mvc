@@ -15,7 +15,7 @@ try {
         id INT AUTO_INCREMENT PRIMARY KEY,
         title TEXT NOT NULL,
         description TEXT,
-        completed TINYINT DEFAULT 0,
+        completed TINYINT DEFAULT 0
        
     )');
 
