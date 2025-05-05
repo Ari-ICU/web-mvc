@@ -52,7 +52,11 @@
                     <tbody>
                         <?php foreach ($tags as $tag): ?>
                         <tr>
-                            <td><?= htmlspecialchars($tag['name']) ?></td>
+                            <td>
+                                <a href="/tags/<?= htmlspecialchars($tag['id']) ?>">
+                                    <?= htmlspecialchars($tag['name']) ?>
+                                </a>
+                            </td>
                             <td><?= htmlspecialchars($tag['description'] ?? '-') ?></td>
                             <td>
                                 <div class="action-buttons d-flex gap-2">

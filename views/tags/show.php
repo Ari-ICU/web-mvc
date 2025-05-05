@@ -24,11 +24,7 @@
                     <div class="col-md-6 mb-3">
                         <p><strong>ID:</strong> <?= htmlspecialchars($tag['id']) ?></p>
                         <p><strong>Name:</strong> <?= htmlspecialchars($tag['name']) ?></p>
-                    </div>
-
-                    <!-- Right Column -->
-                    <div class="col-md-6 mb-3">
-                        <p><strong>Description:</strong>
+                        <p><strong>Description:</strong><br>
                             <?= !empty($tag['description']) ? htmlspecialchars($tag['description']) : 'No description' ?>
                         </p>
                     </div>
@@ -36,7 +32,6 @@
 
                 <div class="form-actions">
                     <a href="/tags" class="btn btn-secondary">Back to Tags</a>
-                    <a href="/tags/<?= htmlspecialchars($tag['id']) ?>/edit" class="btn btn-primary">Edit Tag</a>
                 </div>
             </div>
         </div>
