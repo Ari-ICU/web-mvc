@@ -1,0 +1,23 @@
+# Ignore environment files
+.env
+
+# Ignore Composer dependencies (optional — usually you commit composer.json but not vendor/)
+vendor/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore log and cache files
+*.log
+cache/
+logs/
+
+# Ignore IDE/editor settings
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore OS generated files
+*.swp
