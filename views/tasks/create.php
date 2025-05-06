@@ -37,7 +37,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="user_id" class="form-label">Assign To:</label>
-                            <select name="user_id" id="user_id" class="form-control" required>
+                            <select name="user_id" id="user_id" class="form-control">
                                 <option value="">Select User</option>
                                 <?php foreach ($users as $user): ?>
                                 <option value="<?php echo htmlspecialchars($user['id']); ?>">
@@ -52,7 +52,7 @@
                     <div class="col-md-6 mb-3">
                         <div class="mb-3">
                             <label for="tags" class="form-label">Tags:</label>
-                            <select name="tags[]" id="tags" class="form-control" multiple required>
+                            <select name="tags[]" id="tags" class="form-control" multiple>
                                 <?php foreach ($tags as $tag): ?>
                                 <option value="<?php echo htmlspecialchars($tag['id']); ?>">
                                     <?php echo htmlspecialchars($tag['name']); ?>
