@@ -57,7 +57,7 @@ try {
             status ENUM("pending", "completed", "canceled") DEFAULT "pending",
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
         )
     ');
 

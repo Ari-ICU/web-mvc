@@ -37,7 +37,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="user_id" class="form-label">Assign To:</label>
-                            <select name="user_id" id="user_id" class="form-control" required>
+                            <select name="user_id" id="user_id" class="form-control">
                                 <option value="">Select User</option>
                                 <?php foreach ($users as $user): ?>
                                 <option value="<?php echo htmlspecialchars($user['id']); ?>"
