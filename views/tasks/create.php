@@ -1,4 +1,4 @@
-<?php $activePage = 'todos'; ?>
+<?php $activePage = 'tasks'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -77,8 +77,9 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="post_date" class="form-label">Due Date:</label>
-                            <input type="date" id="post_date" name="post_date" class="form-control">
+                            <label for="due_date" class="form-label">Due Date:</label>
+                            <input type="date" id="due_date" name="due_date" class="form-control"
+                                value="<?= htmlspecialchars($formData['due_date'] ?? $task['due_date'] ?? '') ?>">
                         </div>
 
                     </div>

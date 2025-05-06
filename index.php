@@ -31,7 +31,8 @@ require_once BASE_PATH . '/Router.php';
 
 // Routes configuration
 $router = new Router();
-//todos routes
+
+//tasks routes
 $router->add('GET', '/tasks', 'TaskController', 'index');
 $router->add('GET', '/tasks/(\d+)', 'TaskController', 'show');
 $router->add('GET', '/tasks/create', 'TaskController', 'create');
@@ -40,7 +41,7 @@ $router->add('GET', '/tasks/(\d+)/edit', 'TaskController', 'update');
 $router->add('POST', '/tasks/(\d+)/edit', 'TaskController', 'update');
 $router->add('POST', '/tasks/(\d+)/delete', 'TaskController', 'delete');
 
-
+//tags route
 $router->add('GET', '/tags', 'TagController', 'index');
 $router->add('GET', '/tags/(\d+)', 'TagController', 'show');
 $router->add('GET', '/tags/create', 'TagController', 'create');
@@ -48,6 +49,16 @@ $router->add('POST', '/tags/create', 'TagController', 'create');
 $router->add('GET', '/tags/(\d+)/edit', 'TagController', 'update');
 $router->add('POST', '/tags/(\d+)/edit', 'TagController', 'update');
 $router->add('POST', '/tags/(\d+)/delete', 'TagController', 'delete');
+
+// Users Routes
+$router->add('GET', '/users', 'UserController', 'index');
+$router->add('GET', '/users/(\d+)', 'UserController', 'show');
+$router->add('GET', '/users/create', 'UserController', 'create');
+$router->add('POST', '/users', 'UserController', 'create');
+$router->add('GET', '/users/(\d+)/edit', 'UserController', 'update');
+$router->add('POST', '/users/(\d+)/edit', 'UserController', 'update');
+$router->add('POST', '/users/(\d+)/delete', 'UserController', 'delete');
+
 // Dispatch request
 $router->dispatch();
 ?>
